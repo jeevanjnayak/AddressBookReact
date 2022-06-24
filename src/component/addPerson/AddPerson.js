@@ -9,7 +9,7 @@ import profile4 from '../../Assets/download4.jpg'
 
 const AddPerson = () =>{
 
-/*=================================================================================================== */
+
 let startValue = {
     name: "",
     profilePic:"",
@@ -34,18 +34,16 @@ const onNameChange = (event) => {
 }
 const params = useParams;
 
-    useEffect (() => {
-        console.log(params.id)
-        if (params.id){
-            getPersonId(params.id)
-            console.log(params.id)
-        }
-    },[params.id]);
+useEffect(() => {
+    if (params.id) {
+        getPersonId(params.id);
+    }
+},[params.id]);
 
-const getPersonId = (employeeId) => {
+const getPersonId = (bookId) => {
     console.log("Data Found")
-    BookServices.getPersonById(employeeId).then((data)=>{
-        let obj = data.data.data;
+    BookServices.getPersonById(bookId).then((response)=>{
+        let obj = response.data.data;
         console.log(obj);
         setData(obj);
         });
@@ -68,8 +66,8 @@ const getPersonId = (employeeId) => {
                day: array[0]+array[1],
                month: array[3]+array[4]+array[5],
                year: array[7]+array[8]+array[9]+array[10]
-             });
-           };
+            });
+    };
 
 const save = async (event) => {
     event.preventDefault();
@@ -107,12 +105,14 @@ const save = async (event) => {
     
 }
 
-/*=================================================================================================== */
 
   return (
     <div>
-       
-  <div className="form-content">
+    
+  <div className="home-button">
+                    <Link to="/home">
+                        <button variant="contained" size="large">Home</button></Link>
+                </div>
       <div className="form-head">
           <span> PERSON ADDRESS FORM </span>
       </div>
@@ -278,16 +278,16 @@ const save = async (event) => {
                     </div>
               
           <div className="buttonParent">
+          <Link to="/home" className="resetButton
+                        button cancelButton">Cancel</Link>
               <div className="add-reset">
                   <button type="submit" className="button addButton" id="addButton">{formValue.isUpdate ? 'Update' : 'Submit'}</button>
-                  <Link to="/home" >
-                  <button type="submit" className="button addButton" id="addButton">Home</button></Link>
+                  
                   <button type="reset" className="resetButton button" id="resetButton" onClick={onReset}>Reset</button>
               </div>
           </div>
       </form>
   </div>
-    </div>
   )
 }
 
